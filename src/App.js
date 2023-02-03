@@ -3,6 +3,7 @@ import React,{ useState } from 'react';
 import './index.css';
 import Employee from './components/employee';
 import {v4 as uuidv4} from 'uuid';
+import AddEmployee from './components/AddEmployees';
 
 function App() {
   //console.log("We Are About to list the Employees");
@@ -53,7 +54,8 @@ function App() {
       }
     ]
   );
-
+  
+  // update Employee function
   function uptEmployee(id, newName, newRole){
     console.log('update Employee inside of app.js');
     const updatedEmployees = employees.map((employee) => {
@@ -66,7 +68,16 @@ function App() {
     });
     // update Employee
     setEmpoyees(updatedEmployees);
+  }
 
+  function newEmployee(name, role, img) {
+    const newEmployee = {
+      id: uuidv4(),
+      name: name,
+      role: role,
+      img: img
+    }
+    setEmpoyees([...employees, newEmployee])
   }
   return (
     <div className="App">
@@ -90,7 +101,8 @@ function App() {
             uptEmployee={uptEmployee}
           />
           );})}
-      </div>      
+      </div>   
+        <AddEmployee newEmployee={newEmployee} />    
       </>
         : 
       <p>Access Denied</p>
