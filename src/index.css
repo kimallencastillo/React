@@ -1,0 +1,33 @@
+/* Tailwindcss */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Buttons */
+.btn_close {
+   color: white;
+   background-color: #5c636a;
+}
+
+.btn_close:hover {
+    cursor: pointer;
+    box-shadow: 0 0.4rem 1.4rem 0 rgba(92, 99, 106);
+    transition: transform 150ms;
+    transform: scale(1.03);
+    
+}
+
+.btn_accept {
+    color: white;
+    background-color: #0b5ed7;
+ }
+ 
+ .btn_accept:hover {
+     cursor: pointer;
+     box-shadow: 0 0.4rem 1.4rem 0 rgba(11, 94, 215);
+     transition: transform 150ms;
+     transform: scale(1.03);
+     
+ }
+
+
