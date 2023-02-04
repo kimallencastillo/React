@@ -81,12 +81,12 @@ function Employees() {
     setEmpoyees([...employees, newEmployee])
   }
   return (
-    <div className="App bg-gray-300 min-h-screen">
+    <div className="">
       
       {showEmployees ?
       <>
   
-      <div className='flex flex-wrap justify-center my-2'>
+      <div className='flex flex-wrap justify-center '>
 
         {/* Using Map */}
         {employees.map((employee) => {
