@@ -8,8 +8,10 @@ import EditEmployee from './components/EditEmployees';
 import Header from './components/Header';
 import Employees from './pages/Employees';
 import {BrowserRouter, Routes, Route } from 'react-router-dom';
-import Dictionary from './components/Dictionary';
+import Dictionary from './pages/Dictionary';
 import Customers from './pages/Customers';
+import Definition from './pages/Definition';
+import NotFound from './components/NotFound';
 function App() {
 
   return (
@@ -18,7 +20,11 @@ function App() {
         <Routes>
           <Route path='/employees' element={<Employees />} />
           <Route path='/customers' element={<Customers />} />
+          
+          <Route path='/dictionary/:search' element={<Definition />} />
           <Route path='/dictionary' element={<Dictionary />} />
+          <Route path='/404' element={<NotFound/>} />
+          <Route path='*' element={<NotFound/>} />
         </Routes>
       </Header>
     </BrowserRouter>
