@@ -10,6 +10,7 @@ import Employees from './pages/Employees';
 import {BrowserRouter, Routes, Route } from 'react-router-dom';
 import Dictionary from './pages/Dictionary';
 import Customers from './pages/Customers';
+import Customer from './pages/Customer';
 import Definition from './pages/Definition';
 import NotFound from './components/NotFound';
 function App() {
@@ -20,7 +21,7 @@ function App() {
         <Routes>
           <Route path='/employees' element={<Employees />} />
           <Route path='/customers' element={<Customers />} />
-          
+          <Route path='/customer/:id' element={<Customer />} />
           <Route path='/dictionary/:search' element={<Definition />} />
           <Route path='/dictionary' element={<Dictionary />} />
           <Route path='/404' element={<NotFound/>} />
