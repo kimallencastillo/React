@@ -5,18 +5,18 @@ import Modal from 'react-bootstrap/Modal';
 function AddCustomer(props) {
   const [name, setName] = useState('');
   const [industry, setIndustry] = useState('');
-  const [show, setShow] = useState(false);
+  const [show, setShow] = useState(props.show );
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
   return (
     <>
-    <button onClick={handleShow} className="block mx-auto m4 bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded">
+    <button onClick={props.toggleShow} className="block mx-auto m4 bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded">
         + Add Customer
     </button>
 
       <Modal
-        show={show}
+        show={props.show}
         onHide={handleClose}
         backdrop="static"
         keyboard={false}
@@ -36,7 +36,7 @@ function AddCustomer(props) {
         id="editModal" className="w-full max-w-sm">
           <div className="md:flex md:items-center mb-6">
             <div className="md:w-1/3">
-              <label className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="inline-full-name">
+              <label className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" htmlFor="inline-full-name">
               Customer Name
               </label>
               </div>
@@ -62,7 +62,7 @@ function AddCustomer(props) {
                   placeholder='Bocchi The Rock'
                   type="text" 
                   value={industry}
-                  onChange={(e) => {setI  ndustry(e.target.value)}}
+                  onChange={(e) => {setIndustry(e.target.value)}}
                   />
                 </div>
             </div>
@@ -72,12 +72,12 @@ function AddCustomer(props) {
         <Modal.Footer>
           <button 
           className='bg-slate-400 hover:bg-slate-500 text-white font-bold py-2 px-4 rounded' 
-          onClick={handleClose}>
+          onClick={props.toggleShow}>
             Close
           </button>
           <button
             className='bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded' 
-            onClick={handleClose}
+            
             form="editModal">
             Add
           </button>
