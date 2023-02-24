@@ -24,14 +24,21 @@ export default function Customer() {
   });
 
   useEffect(() => {
-    //console.log('useEffect')
     const url = baseUrl + "api/customers/" + id;
-    fetch(url)
+    const access = localStorage.getItem("access");
+    fetch(url, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${access}`,
+      },
+    })
       .then((response) => {
         if (response.status === 404) {
-          //redirect to a 404 page ( new URL )
+          // redirect to a 404 page ( new URL )
           setNotFound(true);
-          //render a 404 component in this page
+          // render a 404 component in this page
+        } else if (response.status === 401) {
+          navigate("/login");
         }
         if (!response.ok) {
           //console.log('response', response)
@@ -58,15 +65,20 @@ export default function Customer() {
   function updateCustomer(e) {
     e.preventDefault();
     const url = baseUrl + "api/customers/" + id;
+    const access = localStorage.getItem("access");
     fetch(url, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${access}`,
       },
       body: JSON.stringify(tempCustomer),
     })
       .then((response) => {
         //console.log('respones', response)
+        if (response.status === 401) {
+          navigate("/login");
+        }
         if (!response.ok) throw new Error("Something Went Wrong");
         return response.json();
       })
@@ -96,7 +108,7 @@ export default function Customer() {
           >
             <div className="md:flex md:items-center mb-6">
               <div className="md:w-1/6">
-                <label for="name">Name</label>
+                <label htmlFor="name">Name</label>
               </div>
               <div className="md:w-3/4">
                 <input
@@ -113,7 +125,7 @@ export default function Customer() {
             </div>
             <div className="md:flex md:items-center mb-6">
               <div className="md:w-1/6">
-                <label for="industry">Industry</label>
+                <label htmlFor="industry">Industry</label>
               </div>
               <div className="md:w-3/4">
                 <input
@@ -157,13 +169,18 @@ export default function Customer() {
               className="bg-slate-800 hover:bg-slate-900 text-white font-bold py-2 px-4 rounded"
               onClick={(e) => {
                 const url = baseUrl + "api/customers/" + id;
+                const access = localStorage.getItem("access");
                 fetch(url, {
                   method: "DELETE",
                   headers: {
                     "Content-Type": "application/json",
+                    Authorization: `Bearer ${access}`,
                   },
                 })
                   .then((response) => {
+                    if (response.status === 401) {
+                      navigate("/login");
+                    }
                     if (!response.ok) {
                       throw new Error("Something went wrong");
                     }
@@ -176,8 +193,7 @@ export default function Customer() {
                   });
               }}
             >
-              {" "}
-              Delete{" "}
+              Delete
             </button>
           </div>
         </div>
