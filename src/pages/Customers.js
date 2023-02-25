@@ -1,13 +1,14 @@
-import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useEffect, useState, useContext } from "react";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { baseUrl } from "../shared";
 import AddCustomer from "../components/AddCustomer";
-
+import { LoginContext } from "../App";
 export default function Customers() {
+  const [loggedIn, setLoggedIn] = useContext(LoginContext);
   const [customers, setCustomers] = useState();
   const [show, setShow] = useState();
   const navigate = useNavigate();
-
+  const location = useLocation();
   function toggleShow() {
     setShow(!show);
   }
@@ -25,7 +26,12 @@ export default function Customers() {
       //fetch('http://localhost:8000/api/customers/')
       .then((response) => {
         if (response.status === 401) {
-          navigate("/login");
+          setLoggedIn(false);
+          navigate("/login", {
+            state: {
+              previousUrl: location.pathname,
+            },
+          });
         }
         return response.json();
       })
@@ -39,11 +45,13 @@ export default function Customers() {
   // Adding new Customer Function
   function newCustomer(name, industry) {
     const data = { name: name, industry: industry };
+    const access = localStorage.getItem("access");
     const url = baseUrl + "api/customers/";
     fetch(url, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${access}`,
       },
       body: JSON.stringify(data),
     })

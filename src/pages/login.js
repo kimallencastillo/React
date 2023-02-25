@@ -1,8 +1,14 @@
-import { useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { baseUrl } from "../shared";
+import { useNavigate, useLocation } from "react-router-dom";
+import { LoginContext } from "../App";
+
 export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [loggedIn, setLoggedIn] = useContext(LoginContext);
 
   function login(e) {
     e.preventDefault();
@@ -23,7 +29,16 @@ export default function Login() {
       .then((data) => {
         localStorage.setItem("access", data.access);
         localStorage.setItem("refresh", data.refresh);
-        console.log(localStorage);
+        //  console.log(location);
+        //  console.log(location.state);
+        //  console.log(location?.state?.previousUrl);
+        setLoggedIn(true);
+        navigate(
+          location?.state?.previousUrl
+            ? location.state.previousUrl
+            : "/customers"
+        );
+        // console.log(localStorage);
       });
   }
   return (
